@@ -1,0 +1,20 @@
+{
+    "perl" : "6.d",
+    "name" : "NKN",
+    "version" : "0.0.1",
+    "description" : "New Kind of Network in raku",
+    "authors" : [ "Lucien Grondin" ],
+    "license" : "MIT-License",
+    "provides" : {
+        "NKN" : "lib/NKN.rakumod",
+        "NKN::Wallet": "lib/NKN/Wallet.rakumod"
+    },
+    "depends" : [ "Ed25519", "Base58" ],
+    "build-depends" : [ ],
+    "test-depends" : [ ],
+    "resources" : [ ],
+    "tags": [
+      "nkn"
+    ],
+    "source-url" : "git://github.com/grondilu/nkn-raku.git"
+}
