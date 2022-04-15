@@ -1,5 +1,5 @@
 # nkn-raku
-NKN in raku
+[NKN](http://nkn.org) in [raku](http://raku.org).
 
 ## Synopsis
 
