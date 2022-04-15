@@ -1,7 +1,7 @@
 {
     "perl" : "6.d",
     "name" : "NKN",
-    "version" : "0.0.1",
+    "version" : "0.1.0",
     "description" : "New Kind of Network in raku",
     "authors" : [ "Lucien Grondin" ],
     "license" : "MIT-License",
@@ -9,7 +9,7 @@
         "NKN" : "lib/NKN.rakumod",
         "NKN::Wallet": "lib/NKN/Wallet.rakumod"
     },
-    "depends" : [ "Ed25519", "Base58" ],
+    "depends" : [ "Ed25519", "Base58", "Digest" ],
     "build-depends" : [ ],
     "test-depends" : [ ],
     "resources" : [ ],
