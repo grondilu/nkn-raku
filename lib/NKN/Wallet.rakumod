@@ -75,7 +75,10 @@ multi method new(Str :$password, Ed25519::Key :$private-key) {
     :$initialisation-vector;
 }
 
-method retrieve-private-key(Str $password where sha256(sha256(sha256($password))) eq $!password-hash) {
+method private-key {
+  my $password = %*ENV<NKN_WALLET_PASSWORD> ||
+  { LEAVE { run <stty echo> }; run <stty -echo>; prompt "password: " }();
+  die "wrong password ($password)" unless sha256(sha256(sha256 $password)) eq $!password-hash;
   my $master-key-unencrypted = aec-cbc-enc256
     data => $!master-key,
     key => sha256(sha256 $password),
