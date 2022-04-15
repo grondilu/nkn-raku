@@ -1,4 +1,12 @@
 # nkn-raku
 NKN in raku
 
-Not much to see here so far.
+## Synopsis
+
+```raku
+use NKN;
+
+say my NKN::Wallet $wallet .= new: "password";
+```
+
+
