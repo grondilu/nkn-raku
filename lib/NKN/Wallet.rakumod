@@ -46,12 +46,12 @@ multi method new() {
   samewith $password;
 }
 multi method new(Str $password) {
-  samewith :$password, :private-key(Ed25519::Key.new)
+  samewith $password, :private-key(Ed25519::Key.new)
 }
-multi method new(Str :$password!, blob8 :$private-key) {
-  samewith :$password, :private-key(Ed25519::Key.new: :$private-key)
+multi method new(Str $password, blob8 :$private-key) {
+  samewith $password, :private-key(Ed25519::Key.new: :$private-key)
 }
-multi method new(Str :$password!, Ed25519::Key :$private-key) {
+multi method new(Str $password, Ed25519::Key :$private-key) {
   my $password-key = sha256 sha256 $password.encode("utf8");
   my $master-key-unencrypted = blob8.new: (^256).roll(32);
   my $initialisation-vector = blob8.new: (^256).roll(16);
