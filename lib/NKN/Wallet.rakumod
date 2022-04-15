@@ -37,6 +37,9 @@ our sub aec-cbc-enc256(
   }
 }
 
+multi method new(Str $password) {
+  samewith :$password, :private-key(Ed25519::Key.new)
+}
 multi method new(Str :$password, blob8 :$private-key) {
   samewith :$password, :private-key(Ed25519::Key.new: $private-key)
 }
@@ -46,7 +49,7 @@ multi method new(Str :$password, Ed25519::Key :$private-key) {
   my $initialisation-vector = blob8.new: (^256).roll(16);
   my $signature-script = blob8.new(0x21) ~ $private-key.point.blob ~ blob8.new(0xAC);
   my $program-hash = rmd160 sha256 $signature-script;
-  my $address = Base58::encode $_ ~ sha256($_).subbuf(0, 4) given prefix ~ $program-hash;
+  my $address = Base58::encode $_ ~ sha256(sha256 $_).subbuf(0, 4) given prefix ~ $program-hash;
   my $contract-data = [~]
     $signature-script,
     blob8.new(0),
