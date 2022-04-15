@@ -37,13 +37,21 @@ our sub aec-cbc-enc256(
   }
 }
 
+multi method new() {
+  LEAVE { run <stty echo>; print "\n" }
+  run <stty -echo>;
+  my $password = prompt "Enter password: ";
+  die "password input mismatch" unless $password eq prompt "\nEnter password again: ";
+  print "\n";
+  samewith $password;
+}
 multi method new(Str $password) {
   samewith :$password, :private-key(Ed25519::Key.new)
 }
-multi method new(Str :$password, blob8 :$private-key) {
-  samewith :$password, :private-key(Ed25519::Key.new: $private-key)
+multi method new(Str :$password!, blob8 :$private-key) {
+  samewith :$password, :private-key(Ed25519::Key.new: :$private-key)
 }
-multi method new(Str :$password, Ed25519::Key :$private-key) {
+multi method new(Str :$password!, Ed25519::Key :$private-key) {
   my $password-key = sha256 sha256 $password.encode("utf8");
   my $master-key-unencrypted = blob8.new: (^256).roll(32);
   my $initialisation-vector = blob8.new: (^256).roll(16);
@@ -77,7 +85,7 @@ multi method new(Str :$password, Ed25519::Key :$private-key) {
 
 method private-key {
   my $password = %*ENV<NKN_WALLET_PASSWORD> ||
-  { LEAVE { run <stty echo> }; run <stty -echo>; prompt "password: " }();
+  { LEAVE { run <stty echo>; print "\n" }; run <stty -echo>; prompt "password: " }();
   die "wrong password ($password)" unless sha256(sha256(sha256 $password)) eq $!password-hash;
   my $master-key-unencrypted = aec-cbc-enc256
     data => $!master-key,
