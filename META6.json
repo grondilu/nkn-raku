@@ -9,7 +9,10 @@
         "NKN" : "lib/NKN.rakumod",
         "NKN::Wallet": "lib/NKN/Wallet.rakumod"
     },
-    "depends" : [ "Ed25519", "Base58", "Digest" ],
+    "depends" : [
+      "Ed25519", "Base58", "Digest",
+      "Crypt::LibScrypt"
+    ],
     "build-depends" : [ ],
     "test-depends" : [ ],
     "resources" : [ ],
