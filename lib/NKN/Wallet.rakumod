@@ -8,7 +8,7 @@ use Digest::RIPEMD;
 
 use Ed25519;
 
-constant prefix = blob8.new: 0x02b825.polymod(256 xx *).reverse;
+our constant prefix = blob8.new: 0x02, 0xb8, 0x25;
 
 has Blob (
   $.password-hash,
@@ -55,7 +55,7 @@ multi method new(Str $password, Ed25519::Key :$private-key) {
   my $password-key = sha256 sha256 $password.encode("utf8");
   my $master-key-unencrypted = blob8.new: (^256).roll(32);
   my $initialisation-vector = blob8.new: (^256).roll(16);
-  my $signature-script = blob8.new(0x21) ~ $private-key.point.blob ~ blob8.new(0xAC);
+  my $signature-script = blob8.new(0x20) ~ $private-key.point.blob ~ blob8.new(0xAC);
   my $program-hash = rmd160 sha256 $signature-script;
   my $address = Base58::encode $_ ~ sha256(sha256 $_).subbuf(0, 4) given prefix ~ $program-hash;
   my $contract-data = [~]
