@@ -1,20 +1,18 @@
 #!/usr/bin/env raku
 use Test;
-plan 1;
+plan 3;
 
-use NKN::Wallet;
+use NKN::Wallet::Encrypted;
+class Wallet is NKN::Wallet::Encrypted {}
 
-use Ed25519;
-use Digest::SHA;
-
+%*ENV<NKN_WALLET_PASSWORD> = 
 constant $password = "foo";
 
-%*ENV<NKN_WALLET_PASSWORD> = $password;
-
-my NKN::Wallet $wallet .= new;
-
+my Wallet $wallet .= new;
 
 lives-ok { $wallet.private-key }
-#is $private-key.seed, $wallet.private-key.seed, "private key succesfully retrieved";
+lives-ok { Wallet.new: $wallet.private-key }
+
+ok Wallet.new($wallet.private-key).private-key ~~ $wallet.private-key;
 
 # vi: ft=raku
