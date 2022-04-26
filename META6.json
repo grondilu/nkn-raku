@@ -1,7 +1,7 @@
 {
     "perl" : "6.d",
     "name" : "NKN",
-    "version" : "0.1.5",
+    "version" : "0.2.0",
     "description" : "New Kind of Network in raku",
     "authors" : [ "Lucien Grondin" ],
     "license" : "MIT-License",
@@ -11,7 +11,7 @@
     },
     "depends" : [
       "Ed25519", "Base58", "Digest",
-      "Crypt::LibScrypt", "WebSocket"
+      "Crypt::LibScrypt", "Cro::WebSocket::Client"
     ],
     "build-depends" : [ ],
     "test-depends" : [ ],

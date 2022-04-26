@@ -6,7 +6,7 @@
 ```raku
 use NKN;
 
-say my NKN::Wallet $wallet .= new; 
+say my NKN::Wallet::Encrypted $wallet .= new; 
 
 say $wallet.private-key.sign: "Hello, world!";
 
